@@ -1,0 +1,92 @@
+<odoo>
+  <data>
+    <!-- explicit list FORM view definition -->
+    <record model="ir.ui.view" id="dbconnector_database_form">
+      <field name="name">DB Connector Form</field>
+      <field name="model">dbconnector.dbconnector</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Form">
+            <header>
+                <button name="message" string="Test Conection" type="object" class="oe_highlight"/>
+            </header>
+            <group col="4" colspan="2">
+                <field name="engine_id" string="engine_id" placeholder="Select database engine"/>
+                <newline/>
+                <field name="name" string="Name" placeholder="Name for conecction" />
+                <field name="description" string="Description" placeholder="A description of the connection"/>
+                <field name="host" string="Host" placeholder="Host"/>
+                <field name="port" string="Port" placeholder="Port"/>
+                <field name="user" string="User" placeholder="user"/>
+            </group>
+                <group col="3">
+                    <field name="password" string="Password" placeholder="Password" colspan="2"/>
+                    <button name="see_password" string="see" type="object" class="oe_highlight" colspan="1"/>
+                </group>
+            <group col="4" colspan="2">
+                <field name="active" string="Active" placeholder="Active record"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!-- explicit list Tree view definition -->
+    <record model="ir.ui.view" id="dbconnector_database_tree">
+      <field name="name">DB Connector List</field>
+      <field name="model">dbconnector.dbconnector</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="engine_id"/>
+          <field name="name"/>
+          <field name="description"/>
+          <field name="host"/>
+          <field name="port"/>
+          <field name="user"/>
+          <field name="password"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="dbconnector_engine_tree">
+      <field name="name">Engine DB List</field>
+      <field name="model">dbconnector.engine</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="dbconnector_database_action_window">
+      <field name="name">DB Connector</field>
+      <field name="res_model">dbconnector.dbconnector</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="dbconnector_engine_action_window">
+      <field name="name">Engine DB</field>
+      <field name="res_model">dbconnector.engine</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="DB Connector" id="dbconnector_menu_root"/>
+
+    <!-- menu categories -->
+    <menuitem name="Database" id="dbconnector_menu_database" parent="dbconnector_menu_root"/>
+    <menuitem name="Engine database" id="dbconnector_menu_engine" parent="dbconnector_menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Database List" id="dbconnector_database_list" parent="dbconnector_menu_database"
+              action="dbconnector_database_action_window"/>
+
+    <menuitem name="Engine DB List" id="dbconnector_engine_list" parent="dbconnector_menu_engine"
+              action="dbconnector_engine_action_window"/>
+
+    <!--<menuitem name="Engine database list" id="dbconnector_engine_list" parent="dbconnector_menu_engine"
+              action="dbconnector_engine_action_window"/>-->
+  </data>
+</odoo>

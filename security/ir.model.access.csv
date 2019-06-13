@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dbconnector_dbconnector,dbconnector.dbconnector,model_dbconnector_dbconnector,,1,1,1,1
+access_dbconnector_engine,dbconnector.engine,model_dbconnector_engine,,1,1,1,1
