@@ -2,7 +2,8 @@
 
 from odoo import models, fields, api
 
-import mysql.connector as mysql
+# import mysql.connector as mysql
+import pymysql  # Nueva libreria
 import pymssql
 import sqlite3
 
@@ -60,8 +61,10 @@ class Dbconnector(models.Model):
     def test_conection(self):
         if engine_id.name.lower() == 'mssql':
             pass
-        elif engine_id.name.lower() == 'mysql':
-            pass
+        elif engine_id.name.lower() == 'pymysql':
+            from pkgutil import iter_modules
+            if 'pymysql' in [f[1] for f in iter_modules()]:
+                'SI'
 
         response = []
         try:
