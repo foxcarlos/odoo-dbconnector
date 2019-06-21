@@ -1,5 +1,6 @@
 pymssql
 mysqlclient
 mysql-connector
+PyMySQL
 
 # sudo apt-get install python3-dev libmysqlclient-dev

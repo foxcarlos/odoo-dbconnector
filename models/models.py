@@ -2,6 +2,10 @@
 
 from odoo import models, fields, api
 
+import mysql.connector as mysql
+import pymssql
+import sqlite3
+
 class EngineDatabase(models.Model):
     _name = 'dbconnector.engine'
     _description = 'Databases Engine'
@@ -31,7 +35,7 @@ class Dbconnector(models.Model):
     name = fields.Char(string="Name Database", required=True)
     description = fields.Text(string="Description", required=True)
     host = fields.Char(string="Host", required=True)
-    port = fields.Char(string="Port", required=True)
+    port = fields.Integer(string="Port")
     user = fields.Char(string="User", required=True)
     password = fields.Char(string="Password", required=True)
     engine_id = fields.Many2one("dbconnector.engine", string="Engine",
@@ -54,6 +58,11 @@ class Dbconnector(models.Model):
 
     @api.one
     def test_conection(self):
+        if engine_id.name.lower() == 'mssql':
+            pass
+        elif engine_id.name.lower() == 'mysql':
+            pass
+
         response = []
         try:
             conn = pymssql.connect(self.host, self.user, self.password,

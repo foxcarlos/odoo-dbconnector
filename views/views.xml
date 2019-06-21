@@ -11,19 +11,22 @@
                 <button name="message" string="Test Conection" type="object" class="oe_highlight"/>
             </header>
             <group col="4" colspan="2">
-                <field name="engine_id" string="engine_id" placeholder="Select database engine"/>
+                <field name="engine_id" string="Engine" placeholder="Select database engine"/>
                 <newline/>
                 <field name="name" string="Name" placeholder="Name for conecction" />
                 <field name="description" string="Description" placeholder="A description of the connection"/>
                 <field name="host" string="Host" placeholder="Host"/>
-                <field name="port" string="Port" placeholder="Port"/>
+                <field name="port" string="Port" placeholder="Port" widget="integer"/>
                 <field name="user" string="User" placeholder="user"/>
             </group>
                 <group col="3">
+                    <field name="user" string="User" placeholder="user"/>
                     <field name="password" string="Password" placeholder="Password" colspan="2"/>
-                    <button name="see_password" string="see" type="object" class="oe_highlight" colspan="1"/>
+                    <button name="see_password" type="object" class="oe_highlight" colspan="1">
+                        <span class="fa fa-eye"></span>
+                    </button>
                 </group>
-            <group col="4" colspan="2">
+            <group col="2" colspan="2">
                 <field name="active" string="Active" placeholder="Active record"/>
             </group>
         </form>
