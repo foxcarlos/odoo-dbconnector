@@ -8,7 +8,7 @@
       <field name="arch" type="xml">
         <form string="Form">
             <header>
-                <button name="message" string="Test Conection" type="object" class="oe_highlight"/>
+                <button name="test_conection" string="Test Conection" type="object" class="oe_highlight"/>
             </header>
             <group col="4" colspan="2">
                 <field name="engine_id" string="Engine" placeholder="Select database engine"/>
@@ -17,10 +17,9 @@
                 <field name="description" string="Description" placeholder="A description of the connection"/>
                 <field name="host" string="Host" placeholder="Host"/>
                 <field name="port" string="Port" placeholder="Port" widget="integer"/>
-                <field name="user" string="User" placeholder="user"/>
             </group>
                 <group col="3">
-                    <field name="user" string="User" placeholder="user"/>
+                    <field name="user" string="User" placeholder="User"/>
                     <field name="password" string="Password" placeholder="Password" colspan="2"/>
                     <button name="see_password" type="object" class="oe_highlight" colspan="1">
                         <span class="fa fa-eye"></span>
@@ -33,7 +32,8 @@
       </field>
     </record>
 
-    <!-- explicit list Tree view definition -->
+
+    <!--dbconnector Dbconnector Tree -->
     <record model="ir.ui.view" id="dbconnector_database_tree">
       <field name="name">DB Connector List</field>
       <field name="model">dbconnector.dbconnector</field>
@@ -51,6 +51,32 @@
       </field>
     </record>
 
+    <!--dbconnector Engine FORM-->
+    <record model="ir.ui.view" id="dbconnector_engine_form">
+      <field name="name">Engine DB Form</field>
+      <field name="model">dbconnector.engine</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Form">
+            <header>
+                <button name="prueba" string="Test Module Install" type="object" class="oe_highlight"/>
+            </header>
+
+            <group col="4" colspan="2">
+                <field name="name" string="Engine" placeholder="Select Database Engine name"/>
+                <newline/>
+                <field name="description" string="Description" placeholder="A description of the connection"/>
+                <field name="lib_module" string="Python Module" placeholder="Python module Ex: pymssql"/>
+            </group>
+
+            <group col="2" colspan="2">
+                <field name="active" string="Active" placeholder="Active record"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <!--dbconnector Engine TREE-->
     <record model="ir.ui.view" id="dbconnector_engine_tree">
       <field name="name">Engine DB List</field>
       <field name="model">dbconnector.engine</field>
@@ -58,6 +84,7 @@
         <tree>
           <field name="name"/>
           <field name="description"/>
+          <field name="lib_module"/>
         </tree>
       </field>
     </record>
