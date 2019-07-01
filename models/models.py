@@ -37,9 +37,7 @@ class MessageBox(models.TransientModel):
         return action
 
     def test_module_install(self):
-        msg_text = 'Module installed successfully' if self.engine_id.test_lib() else \
-                'No module named {0}, "install module"'.format(
-                        self.engine_id.lib_module)
+        msg_text = self.engine_id._message()
         ok, msg = self.engine_id.test_lib(), msg_text
         if ok:
             self.text = '<p><b><font style="font-size: 14px;" class="text-alpha">{0}</font></b></p>'.format(msg)
@@ -57,6 +55,7 @@ class EngineDatabase(models.Model):
     name = fields.Char(string='Database Engine name', required=True)
     description = fields.Char(string='Description')
     lib_module = fields.Char(string='Library Python Module', required=True)
+    text = fields.Text()
     active = fields.Boolean(string="Active",
             help="Activate or deactivate record", default=True)
 
@@ -64,24 +63,31 @@ class EngineDatabase(models.Model):
             ('database_uniq', 'UNIQUE(name)',
                 'Database Engine already exist'), ]
 
-
     @api.constrains("lib_module")
     def _validate_lib(self):
         if not self.lib_module:
             raise ValidationError('Library can not be empty')
         else:
             if not self.test_lib():
-                raise ValidationError(
-                        'No module named {0}, "install module"'.format(
-                            self.lib_module))
+                raise ValidationError(self._message())
+
+    def _message(self):
+        if self.test_lib():
+            msg = 'Module is installed'
+        else:
+            msg = 'No module named {0}, "install module"'.format(self.lib_module)
+        return msg
 
     def test_lib(self):
         lib = self.lib_module
         return importlib.util.find_spec(lib)
 
-    def prueba(self):
-        msgbox = self.env['dbconnector.messagebox'].search([], limit=1)
-        msgbox.popup()
+    def button_test_module_install(self):
+        msg = self._message()
+        if self.test_lib:
+            self.text = '<p><b><font style="font-size: 14px;" class="text-success">{0}</font></b></p>'.format(msg)
+        else:
+            self.text = '<p><b><font style="font-size: 14px;" class="text-danger">{0}</font></b></p>'.format(msg)
 
 
 class Dbconnector(models.Model):
@@ -99,10 +105,24 @@ class Dbconnector(models.Model):
             required=True)
     active = fields.Boolean(string="Active",
             help="Activate or deactivate record", default=True)
+    text = fields.Text()
 
     _sql_constraints = [
             ('database_uniq', 'UNIQUE(name, host)',
                 'Database already exist'), ]
+
+
+    def see_password(self):
+        pass
+
+    @api.constrains('engine_id')
+    def valida(self):
+        ok, msg = self.test_conection()[0]
+        if ok:
+            self.text = '<p><b><font style="font-size: 14px;" class="text-success">{0}</font></b></p>'.format(msg)
+        else:
+            self.text = '<p><b><font style="font-size: 14px;" class="text-warning">{0}</font></b></p>'.format(msg)
+        return True
 
     @api.one
     def test_conection(self):
@@ -115,7 +135,7 @@ class Dbconnector(models.Model):
                     password=self.password,
                     db=self.name)
 
-            response = True, 'Conexión exitosa'
+            response = True, 'Successful connection'
         except Exception as e:
             response = False, e
         return response

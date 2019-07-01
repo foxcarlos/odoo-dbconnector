@@ -27,6 +27,7 @@
         'views/views.xml',
         'views/templates.xml',
         'views/views_messagebox.xml',
+        'data/dbconnector.engine.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

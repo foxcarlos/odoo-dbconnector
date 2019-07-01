@@ -8,12 +8,12 @@
       <field name="arch" type="xml">
         <form string="Form">
             <header>
-                <button name="test_conection" string="Test Conection" type="object" class="oe_highlight"/>
+                <button name="valida" string="Test Conection" type="object" class="oe_highlight"/>
             </header>
             <group col="4" colspan="2">
                 <field name="engine_id" string="Engine" placeholder="Select database engine"/>
                 <newline/>
-                <field name="name" string="Name" placeholder="Name for conecction" />
+                <field name="name" string="Database" placeholder="Name for Database" />
                 <field name="description" string="Description" placeholder="A description of the connection"/>
                 <field name="host" string="Host" placeholder="Host"/>
                 <field name="port" string="Port" placeholder="Port" widget="integer"/>
@@ -28,6 +28,11 @@
             <group col="2" colspan="2">
                 <field name="active" string="Active" placeholder="Active record"/>
             </group>
+
+            <group col="2" colspan="2">
+                <field name="text" colspan="4" nolabel="1" readonly="1"  widget="html"/>
+            </group>
+
         </form>
       </field>
     </record>
@@ -59,7 +64,7 @@
       <field name="arch" type="xml">
         <form string="Form">
             <header>
-                <button name="prueba" string="Test Module Install" type="object" class="oe_highlight"/>
+                <button name="button_test_module_install" string="Test Module Install" type="object" class="oe_highlight"/>
             </header>
 
             <group col="4" colspan="2">
@@ -71,6 +76,10 @@
 
             <group col="2" colspan="2">
                 <field name="active" string="Active" placeholder="Active record"/>
+            </group>
+
+            <group col="2" colspan="2">
+                <field name="text" colspan="4" nolabel="1" readonly="1"  widget="html"/>
             </group>
         </form>
       </field>

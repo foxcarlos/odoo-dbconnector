@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	<!-- Base de Service -->
+    <record id="db_engine_1" model="dbconnector.engine">
+        <field name="name">MySQL</field>
+        <field name="description">MySQL Server<field/>
+        <field name="lib_module">pymysql</field>
+        <field name="text"></field>
+        <field name="active">True</field>
+	</record>
+
+    <record id="db_engine_2" model="dbconnector.engine">
+        <field name="name">MSSQL</field>
+        <field name="description">MS SQL Server<field/>
+        <field name="lib_module">pymssql</field>
+        <field name="text"></field>
+        <field name="active">True</field>
+	</record>
+
+    <record id="db_engine_2" model="dbconnector.engine">
+        <field name="name">SQLite3</field>
+        <field name="description">SQLite3 Database<field/>
+        <field name="lib_module">sqlite3</field>
+        <field name="text"></field>
+        <field name="active">True</field>
+	</record>
+
+	</data>
+</openerp>
+
