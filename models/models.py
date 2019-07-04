@@ -60,8 +60,8 @@ class EngineDatabase(models.Model):
             help="Activate or deactivate record", default=True)
 
     _sql_constraints = [
-            ('database_uniq', 'UNIQUE(name)',
-                'Database Engine already exist'), ]
+            ('database_uniq', 'UNIQUE(lib_module)',
+                'Python Library already exist'), ]
 
     @api.constrains("lib_module")
     def _validate_lib(self):
@@ -70,6 +70,8 @@ class EngineDatabase(models.Model):
         else:
             if not self.test_lib():
                 raise ValidationError(self._message())
+            self.text = ''
+        return True
 
     def _message(self):
         if self.test_lib():
@@ -83,11 +85,12 @@ class EngineDatabase(models.Model):
         return importlib.util.find_spec(lib)
 
     def button_test_module_install(self):
+        html = '<p><b><font style="font-size: 14px;" class="{0}">{1}</font></b></p>'
         msg = self._message()
         if self.test_lib:
-            self.text = '<p><b><font style="font-size: 14px;" class="text-success">{0}</font></b></p>'.format(msg)
+            self.text = html.format('text-success', msg)
         else:
-            self.text = '<p><b><font style="font-size: 14px;" class="text-danger">{0}</font></b></p>'.format(msg)
+            self.text = html.format('text-danger', msg)
 
 
 class Dbconnector(models.Model):
@@ -115,28 +118,34 @@ class Dbconnector(models.Model):
     def see_password(self):
         pass
 
-    @api.constrains('engine_id')
-    def valida(self):
-        ok, msg = self.test_conection()[0]
-        if ok:
-            self.text = '<p><b><font style="font-size: 14px;" class="text-success">{0}</font></b></p>'.format(msg)
-        else:
-            self.text = '<p><b><font style="font-size: 14px;" class="text-warning">{0}</font></b></p>'.format(msg)
+    @api.constrains('engine_id', 'user', 'name', 'host', 'port', 'password')
+    def _vigila(self):
+        self.text = ''
         return True
 
     @api.one
-    def test_conection(self):
-        pluginX = importlib.import_module(self.engine_id.lib_module)
+    def valida(self):
+        html = '<p><b><font style="font-size: 14px;" class="{0}">{1}</font></b></p>'
+        conn, msg = self.connect()
+        if conn:
+            self.text = html.format('text-success', msg)
+            conn.close()
+        else:
+            self.text = html.format('text-warning', msg)
+        return True
 
-        response = []
+    def connect(self):
+        self.ensure_one()
+        pluginX = importlib.import_module(self.engine_id.lib_module)
         try:
             conn = pluginX.connect(host=self.host,
                     user=self.user,
                     password=self.password,
                     db=self.name)
 
-            response = True, 'Successful connection'
-        except Exception as e:
-            response = False, e
+            response = conn, 'successful connection'
+        except Exception as error:
+            response = conn, str(error)
+
         return response
 

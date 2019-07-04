@@ -64,14 +64,14 @@
       <field name="arch" type="xml">
         <form string="Form">
             <header>
-                <button name="button_test_module_install" string="Test Module Install" type="object" class="oe_highlight"/>
+                <button name="button_test_module_install" string="Check Python library" type="object" class="oe_highlight"/>
             </header>
 
             <group col="4" colspan="2">
                 <field name="name" string="Engine" placeholder="Select Database Engine name"/>
                 <newline/>
                 <field name="description" string="Description" placeholder="A description of the connection"/>
-                <field name="lib_module" string="Python Module" placeholder="Python module Ex: pymssql"/>
+                <field name="lib_module" string="Python Library" placeholder="Python Library Ex: pymssql"/>
             </group>
 
             <group col="2" colspan="2">
