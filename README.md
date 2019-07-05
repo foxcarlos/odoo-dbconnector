@@ -22,8 +22,11 @@ if conn:
 else:
     print('ocurrio el siguiente error {0}'.format(msg))
 
+```
+
 = Otro uso que se le puede dar es solo para almanecar los datos de la conexion =
 
+```sh
 import pymysql
 
 driver = env['dbconnector.dbconnector'].search(
