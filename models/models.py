@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError, UserError, Warning, currentframe
-
 import importlib
 
 # import mysql.connector as mysql
 import pymysql  # Nueva libreria
 import pymssql
 import sqlite3
+import base64
+
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError, UserError, Warning, currentframe
+
 
 class MessageBox(models.TransientModel):
     _name = 'dbconnector.messagebox'
@@ -115,8 +117,10 @@ class Dbconnector(models.Model):
                 'Database already exist'), ]
 
 
-    def see_password(self):
-        pass
+    @api.onchange('password')
+    @api.depends('password')
+    def obfuscate_passw(self):
+        self.password = self.env['dbconnector.password'].encode(self.password)
 
     @api.constrains('engine_id', 'user', 'name', 'host', 'port', 'password')
     def _vigila(self):
@@ -140,12 +144,40 @@ class Dbconnector(models.Model):
         try:
             conn = pluginX.connect(host=self.host,
                     user=self.user,
-                    password=self.password,
+                    password=self.env['dbconnector.password'].decode(self.password),
                     db=self.name)
 
             response = conn, 'successful connection'
         except Exception as error:
-            response = conn, str(error)
+            response = False, str(error)
 
         return response
+
+class PasswordEncryption(models.AbstractModel):
+
+    _name = 'dbconnector.password'
+    _description = 'Ofuscate password'
+
+    def encode(self, text_to_encrypt=''):
+        if text_to_encrypt:
+            key = "1234567890"
+            enc = []
+            for i in range(len(text_to_encrypt)):
+                key_c = key[i % len(key)]
+                enc_c = chr((ord(text_to_encrypt[i]) + ord(key_c)) % 256)
+                enc.append(enc_c)
+            encrypted_text = base64.urlsafe_b64encode("".join(enc).encode()).decode()
+
+        return encrypted_text or None
+
+    @staticmethod
+    def decode(encrypted):
+        key = "1234567890"
+        dec = []
+        enc = base64.urlsafe_b64decode(encrypted).decode()
+        for i in range(len(enc)):
+            key_c = key[i % len(key)]
+            dec_c = chr((256 + ord(enc[i]) - ord(key_c)) % 256)
+            dec.append(dec_c)
+        return "".join(dec) or None
 

@@ -17,14 +17,14 @@
                 <field name="description" string="Description" placeholder="A description of the connection"/>
                 <field name="host" string="Host" placeholder="Host"/>
                 <field name="port" string="Port" placeholder="Port" widget="integer"/>
+                <newline/>
+                <field name="user" string="User" placeholder="User"/>
+                <field name="password" string="Password" placeholder="Password" colspan="2"/>
+                <!--
+                <button name="see_password" type="object" class="oe_highlight" colspan="1">
+                    <span class="fa fa-eye"></span>
+                </button>-->
             </group>
-                <group col="3">
-                    <field name="user" string="User" placeholder="User"/>
-                    <field name="password" string="Password" placeholder="Password" colspan="2"/>
-                    <button name="see_password" type="object" class="oe_highlight" colspan="1">
-                        <span class="fa fa-eye"></span>
-                    </button>
-                </group>
             <group col="2" colspan="2">
                 <field name="active" string="Active" placeholder="Active record"/>
             </group>
