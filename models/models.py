@@ -159,6 +159,7 @@ class PasswordEncryption(models.AbstractModel):
     _description = 'Ofuscate password'
 
     def encode(self, text_to_encrypt=''):
+        encrypted_text = ''
         if text_to_encrypt:
             key = "1234567890"
             enc = []

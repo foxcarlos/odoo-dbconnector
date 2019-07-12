@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "odoo-dbconnector",
+    'name': "odoo_dbconnector",
 
     'summary': """
-        Odoo Module for store string paramaters of database engine""",
+        Odoo Module for connect or  string paramaters of database engine""",
 
     'description': """
-        Odoo Module for store string parameters of database engine. 
+        Odoo Module for connect or store string parameters of database engine. 
     """,
 
     'author': "foxcarlos",
